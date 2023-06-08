@@ -1,4 +1,55 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[RSS Feed of yujuck]]></title><description><![CDATA[찾아가는 과정의 기록]]></description><link>https://yujuck.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Wed, 07 Jun 2023 13:28:52 GMT</lastBuildDate><item><title><![CDATA[인터넷과 웹]]></title><description><![CDATA[시리즈는 기초를 위한 것이기도 하지만 새로 들어오실 신입분들에게 진행될 OJT에 피드백을 드릴 수 있기 위해 나부터도 다시 공부해야 할 것 같아서 시작한다.  인터넷과 웹 먼저 인터넷과 웹에 대해 간단하게 알아보자 인터넷 ( Internet…]]></description><link>https://yujuck.github.io/20230607-인터넷과 웹/</link><guid isPermaLink="false">https://yujuck.github.io/20230607-인터넷과 웹/</guid><pubDate>Wed, 07 Jun 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;Back to Basics&lt;/code&gt; 시리즈는 기초를 위한 것이기도 하지만 새로 들어오실 신입분들에게 진행될 OJT에 피드백을 드릴 수 있기 위해 나부터도 다시 공부해야 할 것 같아서 시작한다. &lt;br /&gt;&lt;/p&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[RSS Feed of yujuck]]></title><description><![CDATA[찾아가는 과정의 기록]]></description><link>https://yujuck.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Thu, 08 Jun 2023 13:00:37 GMT</lastBuildDate><item><title><![CDATA[NestJS devtools 사용하려다 GraphQLModule 설정만 바꿔본 사람?]]></title><description><![CDATA[NestJS 9.3.0 버전부터 devTools 지원하니까 버전 업데이트 하면 좋을 것 같다는 얘기에 버전 업그레이드를 진행했다.
+NestJS에서 GraphQL을 같이 사용하고 있어 graphql의 버전도 같이 업데이트 해야하는 상황이였다.…]]></description><link>https://yujuck.github.io/230608-NestJS 버전 업데이트/</link><guid isPermaLink="false">https://yujuck.github.io/230608-NestJS 버전 업데이트/</guid><pubDate>Thu, 08 Jun 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;NestJS 9.3.0 버전부터 devTools 지원하니까 버전 업데이트 하면 좋을 것 같다는 얘기에 버전 업그레이드를 진행했다.
+NestJS에서 GraphQL을 같이 사용하고 있어 graphql의 버전도 같이 업데이트 해야하는 상황이였다.&lt;/p&gt;
+&lt;h3&gt;1. 패키지 업데이트&lt;/h3&gt;
+&lt;p&gt;yarn을 사용하고 있어 다음의 명령어로 업데이트를 진행하였다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;&lt;span class=&quot;token function&quot;&gt;yarn&lt;/span&gt; upgrade-interactive&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;yarn upgrade-interactive 명령어는 yarn outdated와 yarn upgrade를 조합한 커맨드라고 생각하면 된다.
+실행하면 설치되어있는 패키지들중에서 업그레이드를 하고 싶은 패키지를 선택하여 업그레이드를 진행할 수 있다.&lt;/p&gt;
+&lt;p&gt;공식 문서를 보면&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;typescript&quot;&gt;&lt;pre class=&quot;language-typescript&quot;&gt;&lt;code class=&quot;language-typescript&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;bootstrap&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; app &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;await&lt;/span&gt; NestFactory&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;create&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;AppModule&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    snapshot&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;await&lt;/span&gt; app&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;listen&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;3000&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;snapshot을 추가할 수 있어야하는데 nest의 버전이 낮으면 해당 부분에서 오류가 발생해서
+@nestjs/core 등 주요 패키지의 업데이트를 진행했다.&lt;/p&gt;
+&lt;h3&gt;2. @nestjs/devtools-intergration 설치&lt;/h3&gt;
+&lt;p&gt;devtools를 사용하기 위해서는 위 패키지를 설치해줘야한다.
+여기서 조금 문제가 있었는데, 계속 위 패키지를 설치하려고 하면 사내 npm 패키지 저장소를 참조하는 것이었다..
+공식문서에서 말하는 것처럼 @nestjs/graphql@11 로 설치를 해도 잘 안되서 그냥 @nestjs/graphql 삭제 후 다시 설치한 다음에
+다시 @nestjs/devtools-intergration 설치를 시도했는데 잘 넘어갔다!&lt;/p&gt;
+&lt;h3&gt;3. graphql 관련 패키지들 업그레이드의 사이드이펙트(?)&lt;/h3&gt;
+&lt;p&gt;@nestjs/graphql 패키지를 &lt;code class=&quot;language-text&quot;&gt;10.1.7&lt;/code&gt;에서 &lt;code class=&quot;language-text&quot;&gt;11.0.5&lt;/code&gt;로 업데이트를 하고 나니
+&lt;code class=&quot;language-text&quot;&gt;GraphQLModule.forRoot&lt;/code&gt;의 첫번째 인자로 전달하는 options 타입인 ApolloDriverConfig가 변경이 되었는지,
+기존에 사용하던 cors와 debug 필드가 오류를 발생하고 있었다..
+어떻게 변경되어서 어떻게 사용해야하는지 열심히 찾아봐야하는 상황..!&lt;/p&gt;
+&lt;h4&gt;cors&lt;/h4&gt;
+&lt;p&gt;cors 관련 내용은 &lt;a href=&quot;https://github.com/nestjs/graphql/issues/2752&quot;&gt;nestjs/graphql 레포지토리의 issues&lt;/a&gt;에서 발견하게 되었다.
+Nestjs에서 graphql 사용할 때에는 GraphQLModule에 따로 적어줬어야 했는데 이제는 Nestjs/common에서 제공해주는 &lt;code class=&quot;language-text&quot;&gt;enableCors()&lt;/code&gt;를 같이 사용하면 된다고 한다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;typescript&quot;&gt;&lt;pre class=&quot;language-typescript&quot;&gt;&lt;code class=&quot;language-typescript&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; app &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;await&lt;/span&gt; NestFactory&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;create&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;AppModule&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+app&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;enableCors&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  origin&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  methods&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  credentials&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4&gt;debug&lt;/h4&gt;
+&lt;p&gt;이 옵션은 요청에서 오류가 발생했을 때 response로 stacktrace를 전달해줄지에 대한 옵션이였다.
+클라이언트에게 stacktrace까지 제공하는 것은 일반적을 권장되지 않는다 하여 &lt;code class=&quot;language-text&quot;&gt;debug: false&lt;/code&gt;로 사용하고 있었는데 이 옵션이 사라져버렸다..!!
+아무리 검색을 해도 안나오고(ㅠㅠ) ApolloDriverConfig 타입을 봐도 못찾은 상황에서
+그래 없을리가 없지..! 하고 다시 천천히 ApolloDriverConfig에서 extends하고 있는 타입들을 살펴보니 눈에 띄는 필드가 하나 발견되었다.
+바로 &lt;code class=&quot;language-text&quot;&gt;includeStacktraceInErrorResponses&lt;/code&gt;!&lt;/p&gt;
+&lt;p&gt;굉장히 직관적인 이름으로 변경이 되어있었다ㅋㅋㅋㅋㅋ
+다행히 잘 찾아내서 추가해주니 이전과 동일하게 stacktrace는 제거가 잘 되었다.. 휴..&lt;/p&gt;
+&lt;h3&gt;결말&lt;/h3&gt;
+&lt;p&gt;변경 후 devtools는 어떻게 사용하는거지? 싶어서 다시한번 &lt;a href=&quot;https://docs.nestjs.com/devtools/overview&quot;&gt;공식문서&lt;/a&gt;를 읽어보았다.
+snapshot 추가하고 DevtoolsModule 추가해주고 하면 사용할 수 있는 줄 알았는데
+&lt;a href=&quot;https://devtools.nestjs.com/&quot;&gt;https://devtools.nestjs.com/&lt;/a&gt; 을 들어가서 로그인을 하니까 유료였다.....
+그냥 쓸 수 있는 줄 알고 바꾸자고 하셨던 것 같은데 알고보니 유료ㅠㅠ
+결국 devtools 사용은 안하는걸로 하고 어쩌다보니 nestjs 버전 업데이트와 graphql 버전 업데이트만 진행하게 된 슬픈지만 좋은 결말..?&lt;/p&gt;
+&lt;p&gt;이상 만약 우리처럼 위의 옵션을 사용하고 있다가 업데이트 하고 보니 사라져서 어떻게 해야하나 싶은 분들을 위해 남기는 글이였습니다..&lt;/p&gt;</content:encoded></item><item><title><![CDATA[인터넷과 웹]]></title><description><![CDATA[시리즈는 기초를 위한 것이기도 하지만 새로 들어오실 신입분들에게 진행될 OJT에 피드백을 드릴 수 있기 위해 나부터도 다시 공부해야 할 것 같아서 시작한다.  인터넷과 웹 먼저 인터넷과 웹에 대해 간단하게 알아보자 인터넷 ( Internet…]]></description><link>https://yujuck.github.io/230607-인터넷과 웹/</link><guid isPermaLink="false">https://yujuck.github.io/230607-인터넷과 웹/</guid><pubDate>Wed, 07 Jun 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;Back to Basics&lt;/code&gt; 시리즈는 기초를 위한 것이기도 하지만 새로 들어오실 신입분들에게 진행될 OJT에 피드백을 드릴 수 있기 위해 나부터도 다시 공부해야 할 것 같아서 시작한다. &lt;br /&gt;&lt;/p&gt;
 &lt;h2&gt;인터넷과 웹&lt;/h2&gt;
 &lt;p&gt;먼저 인터넷과 웹에 대해 간단하게 알아보자&lt;/p&gt;
 &lt;h3&gt;인터넷 ( Internet )&lt;/h3&gt;
@@ -54,7 +105,7 @@ URL이랑 HTTP까지.. 어떻게 한 사람이 다..?&lt;br /&gt;
 &lt;li&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=pYOEy_mAMpI&amp;#x26;list=PLuHgQVnccGMDZP7FJ_ZsUrdCGH68ppvPb&amp;#x26;index=16&quot;&gt;생활코딩&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;https://terms.naver.com/entry.naver?docId=3573476&amp;#x26;cid=59088&amp;#x26;categoryId=59096&quot;&gt;인터넷&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;https://developer.mozilla.org/ko/docs/Learn/Common_questions/Web_mechanics/How_does_the_Internet_work&quot;&gt;인터넷은 어떻게 동작하는가?&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[새로운 시작]]></title><description><![CDATA[prologue '개발자' 라는 직업을 갖게 된 지 벌써…]]></description><link>https://yujuck.github.io/20230606/</link><guid isPermaLink="false">https://yujuck.github.io/20230606/</guid><pubDate>Tue, 06 Jun 2023 00:00:00 GMT</pubDate><content:encoded>&lt;h2&gt;prologue&lt;/h2&gt;
+&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[새로운 시작]]></title><description><![CDATA[prologue '개발자' 라는 직업을 갖게 된 지 벌써…]]></description><link>https://yujuck.github.io/230606/</link><guid isPermaLink="false">https://yujuck.github.io/230606/</guid><pubDate>Tue, 06 Jun 2023 00:00:00 GMT</pubDate><content:encoded>&lt;h2&gt;prologue&lt;/h2&gt;
 &lt;p&gt;&apos;개발자&apos; 라는 직업을 갖게 된 지 벌써 3년 반이라는 시간이 지났다.
 깊은 고민과 생각 없이 흘러가는대로 시작하게 되어서 그런지, 지난 시간들도 &apos;마냥 흘려보낸 것만 같다&apos; 라는 생각을 요즘 굉장히 많이 하고 있다.&lt;/p&gt;
 &lt;p&gt;물론 진짜로 무념무상 흘려보낸건 아니긴 하지.
