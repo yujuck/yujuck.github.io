@@ -1,4 +1,90 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[RSS Feed of yujuck]]></title><description><![CDATA[찾아가는 과정의 기록]]></description><link>https://yujuck.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Fri, 09 Jun 2023 14:27:06 GMT</lastBuildDate><item><title><![CDATA[브라우저 정의, 기능, 기본 구조]]></title><description><![CDATA[OJT…]]></description><link>https://yujuck.github.io/230609-브라우저의 동작/</link><guid isPermaLink="false">https://yujuck.github.io/230609-브라우저의 동작/</guid><pubDate>Fri, 09 Jun 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;OJT 첫번째 주제인 브라우저의 동작 원리.&lt;br&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[RSS Feed of yujuck]]></title><description><![CDATA[찾아가는 과정의 기록]]></description><link>https://yujuck.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Sat, 10 Jun 2023 14:58:46 GMT</lastBuildDate><item><title><![CDATA[브라우저 렌더링]]></title><description><![CDATA[…]]></description><link>https://yujuck.github.io/230611-브라우저 렌더링/</link><guid isPermaLink="false">https://yujuck.github.io/230611-브라우저 렌더링/</guid><pubDate>Sun, 11 Jun 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;어제에 이은 브라우저 동작 파악하기&lt;/p&gt;
+&lt;h2&gt;렌더링 엔진&lt;/h2&gt;
+&lt;p&gt;렌더링 엔진의 기본적인 역할을 요청 받은 내용을 브라우저에 표시하는 것이다.
+프론트 작업 시 브라우저마다 다르게 보이는 경우를 한번쯤 겪어보는데, 브라우저마다 사용하는 렌더링 엔진이 다르기 때문이다.&lt;/p&gt;
+&lt;h2&gt;렌더링 엔진들&lt;/h2&gt;
+&lt;p&gt;참고하고 있는 &lt;a href=&quot;https://d2.naver.com/helloworld/59361&quot;&gt;글&lt;/a&gt;이 아무래도 2012년 글이다보니 크롬에서 웹킷 엔진을 사용하고 있다고 하지만 현재는 전에 얘기했던 것처럼 &lt;code class=&quot;language-text&quot;&gt;블링크&lt;/code&gt;라는 엔진을 사용하고 있다. 블링크는 웹킷을 fork해서 구현된 엔진이다.&lt;br&gt;
+크로미움 기반 브라우저는 블링크(Blink), 파이어폭스는 게코(Gecko), 사파리는 웹킷(Webkit)을 사용하고 있다.&lt;/p&gt;
+&lt;h2&gt;동작 과정&lt;/h2&gt;
+&lt;p&gt;&lt;figure class=&apos;gatsby-resp-image-figure&apos; style=&apos;margin-bottom: 16px;&apos;&gt;
+    &lt;span class=&apos;gatsby-resp-image-wrapper&apos; style=&apos;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 680px; &apos;&gt;
+      &lt;a class=&apos;gatsby-resp-image-link&apos; href=&apos;/static/3226a90f76008d5b9ef77b2fe82b11dc/8e9d0/rendering_flow.jpg&apos; style=&apos;display: block&apos; target=&apos;_blank&apos; rel=&apos;noopener&apos;&gt;
+    &lt;span class=&apos;gatsby-resp-image-background-image&apos; style=&quot;padding-bottom: 14.117647058823529%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAADABQDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAEF/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAH/2gAMAwEAAhADEAAAAd2iQH//xAAUEAEAAAAAAAAAAAAAAAAAAAAQ/9oACAEBAAEFAn//xAAUEQEAAAAAAAAAAAAAAAAAAAAQ/9oACAEDAQE/AT//xAAUEQEAAAAAAAAAAAAAAAAAAAAQ/9oACAECAQE/AT//xAAUEAEAAAAAAAAAAAAAAAAAAAAQ/9oACAEBAAY/An//xAAVEAEBAAAAAAAAAAAAAAAAAAAQQf/aAAgBAQABPyGP/9oADAMBAAIAAwAAABCP/wD/xAAUEQEAAAAAAAAAAAAAAAAAAAAQ/9oACAEDAQE/ED//xAAUEQEAAAAAAAAAAAAAAAAAAAAQ/9oACAECAQE/ED//xAAZEAACAwEAAAAAAAAAAAAAAAAAARExkUH/2gAIAQEAAT8QShL06jT/2Q==&apos;); background-size: cover; display: block;&quot;&gt;&lt;/span&gt;
+  &lt;img class=&apos;gatsby-resp-image-image&apos; alt=&apos;렌더링 엔진 동작 과정&apos; title=&apos;렌더링 엔진 동작 과정&apos; src=&apos;/static/3226a90f76008d5b9ef77b2fe82b11dc/a22ce/rendering_flow.jpg&apos; srcset=&apos;/static/3226a90f76008d5b9ef77b2fe82b11dc/0b705/rendering_flow.jpg 170w,
+/static/3226a90f76008d5b9ef77b2fe82b11dc/31389/rendering_flow.jpg 340w,
+/static/3226a90f76008d5b9ef77b2fe82b11dc/a22ce/rendering_flow.jpg 680w,
+/static/3226a90f76008d5b9ef77b2fe82b11dc/8e9d0/rendering_flow.jpg 788w&apos; sizes=&apos;(max-width: 680px) 100vw, 680px&apos; style=&apos;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&apos; loading=&apos;lazy&apos; decoding=&apos;async&apos;&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;
+    &lt;figcaption class=&apos;gatsby-resp-image-figcaption&apos;&gt;렌더링 엔진 동작 과정&lt;/figcaption&gt;
+  &lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure class=&apos;gatsby-resp-image-figure&apos; style=&apos;margin-bottom: 16px;&apos;&gt;
+    &lt;span class=&apos;gatsby-resp-image-wrapper&apos; style=&apos;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 680px; &apos;&gt;
+      &lt;a class=&apos;gatsby-resp-image-link&apos; href=&apos;/static/1ff99ab700ef877031a4a89c70fd15ce/dcdd0/webkit.jpg&apos; style=&apos;display: block&apos; target=&apos;_blank&apos; rel=&apos;noopener&apos;&gt;
+    &lt;span class=&apos;gatsby-resp-image-background-image&apos; style=&quot;padding-bottom: 45.294117647058826%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAAJABQDASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAAAAECBf/EABUBAQEAAAAAAAAAAAAAAAAAAAAB/9oADAMBAAIQAxAAAAHt26go/8QAFhABAQEAAAAAAAAAAAAAAAAAAQAg/9oACAEBAAEFAmM//8QAFBEBAAAAAAAAAAAAAAAAAAAAEP/aAAgBAwEBPwE//8QAFREBAQAAAAAAAAAAAAAAAAAAARD/2gAIAQIBAT8BJ//EABYQAAMAAAAAAAAAAAAAAAAAAAEgIf/aAAgBAQAGPwI1v//EABwQAAEEAwEAAAAAAAAAAAAAAAEAESFxEDFBYf/aAAgBAQABPyE4Bh8TgNQhSHbz/9oADAMBAAIAAwAAABDQL//EABQRAQAAAAAAAAAAAAAAAAAAABD/2gAIAQMBAT8QP//EABcRAQEBAQAAAAAAAAAAAAAAAAEAESH/2gAIAQIBAT8Qekcv/8QAGxABAAICAwAAAAAAAAAAAAAAAQAREDEhsfD/2gAIAQEAAT8Qt0EnlxEC4CgSJTmk70NY/9k=&apos;); background-size: cover; display: block;&quot;&gt;&lt;/span&gt;
+  &lt;img class=&apos;gatsby-resp-image-image&apos; alt=&apos;웹킷 동작 과정&apos; title=&apos;웹킷 동작 과정&apos; src=&apos;/static/1ff99ab700ef877031a4a89c70fd15ce/a22ce/webkit.jpg&apos; srcset=&apos;/static/1ff99ab700ef877031a4a89c70fd15ce/0b705/webkit.jpg 170w,
+/static/1ff99ab700ef877031a4a89c70fd15ce/31389/webkit.jpg 340w,
+/static/1ff99ab700ef877031a4a89c70fd15ce/a22ce/webkit.jpg 680w,
+/static/1ff99ab700ef877031a4a89c70fd15ce/dcdd0/webkit.jpg 708w&apos; sizes=&apos;(max-width: 680px) 100vw, 680px&apos; style=&apos;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&apos; loading=&apos;lazy&apos; decoding=&apos;async&apos;&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;
+    &lt;figcaption class=&apos;gatsby-resp-image-figcaption&apos;&gt;웹킷 동작 과정&lt;/figcaption&gt;
+  &lt;/figure&gt;&lt;/p&gt;
+&lt;h3&gt;파싱과 트리 구축&lt;/h3&gt;
+&lt;p&gt;렌더링 엔진은 &lt;code class=&quot;language-text&quot;&gt;HTML 문서&lt;/code&gt;를 파싱하여 브라우저가 이해할 수 있는 &lt;code class=&quot;language-text&quot;&gt;DOM(Document Object Model)&lt;/code&gt;으로 변환시킨다. &lt;code class=&quot;language-text&quot;&gt;DOM&lt;/code&gt;은 XML이나 HTML 문서에 접근하기 위한 일종의 인터페이스로서 프로그래밍 언어가 DOM 구조에 접근할 수 있는 방법을 제공하여 그들이 문서 구조, 스타일, 내용 등을 변경할 수 있게 돕는다.&lt;/p&gt;
+&lt;p&gt;HTML을 파싱할 때에는 HTML파서로 파싱을 하고, 이것은 HTML 마크업을 파싱 트리로 변환해준다.
+HTML파서가 따로 있는 것은 HTML 언어의 너그러운 속성으로&lt;/p&gt;
+&lt;p&gt;스타일 요소도 파싱하여, 스타일 정보와 HTML 표시 규칙을 &lt;code class=&quot;language-text&quot;&gt;렌더 트리&lt;/code&gt;라는 또 다른 트리로 만든다.&lt;/p&gt;
+&lt;p&gt;렌더 트리는 시각적 속성이 있는 사각형을 포함하고 있고 정해진 순서대로 화면에 표시된다.&lt;/p&gt;
+&lt;p&gt;렌더 트리 생성이 끝나면 각 노드가 화면의 정확한 위치에 표시되는 &lt;code class=&quot;language-text&quot;&gt;배치&lt;/code&gt;가 시작되며, UI 백엔드에서 렌더 트리의 각 노드를 가로지르며 형상을 만들어내는 &lt;code class=&quot;language-text&quot;&gt;그리기&lt;/code&gt; 과정으로 이어진다.&lt;/p&gt;
+&lt;p&gt;위의 과정들은 점진적으로 진행이 된다. 모든 HTML을 파싱할 때까지 기다리지 않고 렌더 트리 배치와 그리기 과정을 시작한다.&lt;/p&gt;
+&lt;!--
+## 마무리
+
+참고 글에서 중간중간 굉장히 깊게 설명해주는 부분이 있는데 (파서 설명... 파서 설명..)
+알면 좋겠지만 개발 과정에서 파서에 대해 생각하며 개발을 하진 않아서 생략했다.. (읽는 것도..)
+
+참고
+
+- DOM 소개 https://developer.mozilla.org/ko/docs/Web/API/Document_Object_Model/Introduction --&gt;</content:encoded></item><item><title><![CDATA[드럼 배워보기]]></title><description><![CDATA[…]]></description><link>https://yujuck.github.io/230610-드럼 배워보기/</link><guid isPermaLink="false">https://yujuck.github.io/230610-드럼 배워보기/</guid><pubDate>Sat, 10 Jun 2023 00:00:00 GMT</pubDate><content:encoded>&lt;h2&gt;음악&lt;/h2&gt;
+&lt;p&gt;나는 음악 듣는 걸 좋아한다.&lt;br&gt;
+언제부터 좋아했는지는 모르겠지만 음악과 관련된 것이 어렸을 때부터 나를 감싸고 있었던 것 같다.&lt;br&gt;
+초등학교 시절에는 피아노와 바이올린을 했고 (바이올린으로는 콩쿨에서 상도 탔었다.)
+중학교 땐 기타를 배웠고, 고등학교 때에는 아무래도 시기가 시기이다 보니 따로 악기를 배우지는 않았다.&lt;br&gt;
+어렸을 때부터 음악 활동을 접해서 그런건지는 모르겠지만 악기를 배우는 데에 부담감이 없고 배우고 싶은 욕구도 주기적으로 찾아온다. 그 바탕에는 어느 정도 자신감도 있다. 나는 음치, 박치는 아니라는 자신감😎&lt;br&gt;
+처음 배워도 어느 정도는 잘 할 수 있을 것 같다는 자신감이 있다.&lt;/p&gt;
+&lt;h2&gt;음악 취향 변천사&lt;/h2&gt;
+&lt;p&gt;음악 취향에는 변천사(?)가 있는데, 중학교~고1 때에는 힙합을 많이 들었고&lt;br&gt;
+2011년.. 나의 최애 &lt;code class=&quot;language-text&quot;&gt;이적&lt;/code&gt;을 알게 되고 팬이 된 이후에는 힙합은 진짜 거의 안듣고 이적 노래와 함께 그가 좋아하는 노래를 들어본다거나 옛날 노래도 거부감없이 잘 듣게 되었던 것 같다.&lt;br&gt;
+밴드 음악도 굉장히 좋아한다. 고등학교 때 같은 반 친구에게 헤비메탈..까지는 아니었지만 뭔가 좀 하드한 락 노래를 추천 받아서 들었었는데 강렬한 기타와 드럼 사운드에 한 때 빠졌던 기억이 있다.&lt;/p&gt;
+&lt;h2&gt;현재&lt;/h2&gt;
+&lt;p&gt;그리고 지금.
+여전히 나의 음악 취향의 기본은 이적이고 거기에 이제 밴드 음악이 더해졌다.&lt;br&gt;
+요즘 굉장히 좋아하는 밴드는 &lt;code class=&quot;language-text&quot;&gt;너드커넥션&lt;/code&gt;이다.&lt;br&gt;
+내가 어떤 뮤지션을 좋아하게 될 때에는 일련의 과정이 있는 것 같다.&lt;br&gt;
+어떤 한 곡을 들었는데 너무 좋아서 그 뮤지션의 다른 곡들을 일단 다 재생을 시켜본다.&lt;br&gt;
+그렇게 한 곡씩 넘기며 듣는데 대부분이 취향에 맞으면 마음이 열린다.&lt;br&gt;
+그 후에 라이브 무대를 찾아본다거나 그 뮤지션에 대한 정보를 찾아보면서 더 좋아하게 되고 실제 공연을 보러 가는 단계까지 간다면 입덕 완료..&lt;br&gt;
+공연 보는 것 자체가 좋다면 어떤 뮤지션의 공연이든 보러갈텐데 나는 아무래도 좋아하는 뮤지션이 나오는 공연이 좋긴 좋다.&lt;/p&gt;
+&lt;h2&gt;드럼 배우기&lt;/h2&gt;
+&lt;p&gt;그래서!
+내가 좋아하는 일 찾기 과정의 일환으로 오늘 드럼을 배우고 왔다.&lt;br&gt;
+요즘은 너드커넥션을 굉장히 좋아하고 있어서 밴드를 하고 싶은 마음이 큰데,
+기타는 그래도 배워본 적도 있고 집에 기타도 있어서 언제든 칠 수 있지만 드럼은 한번도 배워본 적이 없어서 해보고 싶었다.&lt;br&gt;
+그래서 일단 잘 맞을지 파악해보자는 마음으로 원데이클래스를 찾아보고 신청해서 배우고 왔는데..!&lt;br&gt;
+굉장히 재미있었다!&lt;/p&gt;
+&lt;p&gt;기타는 코드 잡는 게 어려운 것들이 꽤 많다..&lt;br&gt;
+물론 기타치는게 너무 좋아서 연습을 엄청 많이 하면 잘 할 수 있겠지만..
+암튼 어려운 게 있는데 드럼은 일단 치면 소리는 나니까ㅋㅋㅋㅋ
+첫 시작 난이도로는 드럼이 쉬운 것 같다.&lt;br&gt;
+근데 이것도 물론 오늘 처음하는거라 매우 기본적인 리듬만 한거라서 그럴 수 있다.&lt;/p&gt;
+&lt;h2&gt;마무리&lt;/h2&gt;
+&lt;p&gt;처음 배웠는데 어느 정도 흥미를 느껴서 한달 정도 더 배워보고 싶은 마음이 들었다.
+내일 당장 학원 찾아볼 수도..🤣🤣&lt;br&gt;
+지금 해보고 싶은건 직장인 밴드 해보기인데 포지션이 굉~장히 고민이 된다.
+드럼도 해보고 싶고 기타도 하고 싶고 베이스도 배워보고 싶고..&lt;br&gt;
+다 잘하고 싶어!!&lt;/p&gt;
+&lt;p&gt;악기 다 잘 다루고 싶은 마음으로 마무리😃&lt;/p&gt;</content:encoded></item><item><title><![CDATA[브라우저 정의, 기능, 기본 구조]]></title><description><![CDATA[OJT…]]></description><link>https://yujuck.github.io/230609-브라우저 정의, 기능, 기본 구조/</link><guid isPermaLink="false">https://yujuck.github.io/230609-브라우저 정의, 기능, 기본 구조/</guid><pubDate>Fri, 09 Jun 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;OJT 첫번째 주제인 브라우저의 동작 원리.&lt;br&gt;
 네이버 기술 블로그에 올라온 글을 참고해서 공부하길래 똑같은 글을 읽어봤다.&lt;br&gt;
 근데 이 글도 애초에 탈리 가르시엘이라는 사람의 글을 번역한 글이던데
 브라우저 내부와 수백만 줄 분량의 오픈소스 렌더링 엔진의 소스 코드를 직접 분석하여 브라우저 동작을 파악한 사람의 글이라고 한다.. 대단쓰..&lt;/p&gt;
