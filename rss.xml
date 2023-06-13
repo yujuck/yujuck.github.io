@@ -1,4 +1,80 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[RSS Feed of yujuck]]></title><description><![CDATA[찾아가는 과정의 기록]]></description><link>https://yujuck.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Sun, 11 Jun 2023 14:38:30 GMT</lastBuildDate><item><title><![CDATA[브라우저 렌더링]]></title><description><![CDATA[…]]></description><link>https://yujuck.github.io/230611-브라우저 렌더링/</link><guid isPermaLink="false">https://yujuck.github.io/230611-브라우저 렌더링/</guid><pubDate>Sun, 11 Jun 2023 00:00:00 GMT</pubDate><content:encoded>&lt;h2&gt;렌더링 엔진&lt;/h2&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[RSS Feed of yujuck]]></title><description><![CDATA[찾아가는 과정의 기록]]></description><link>https://yujuck.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Tue, 13 Jun 2023 13:50:12 GMT</lastBuildDate><item><title><![CDATA[crontab 설정을 해보자]]></title><description><![CDATA[서비스를 개발하다보면 주기적으로 처리되어야 하는 작업들이 있다. 우리 서비스에서는 테스트로 넣었던 주문들의 상태를 취소 상태로 변경하는 것을 주기적으로 처리하고 있고,
+Let's Encrypt SSL 인증서를…]]></description><link>https://yujuck.github.io/230612-crontab 설정을 해보자/</link><guid isPermaLink="false">https://yujuck.github.io/230612-crontab 설정을 해보자/</guid><pubDate>Mon, 12 Jun 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;서비스를 개발하다보면 주기적으로 처리되어야 하는 작업들이 있다.&lt;br&gt;
+우리 서비스에서는 테스트로 넣었던 주문들의 상태를 취소 상태로 변경하는 것을 주기적으로 처리하고 있고,
+Let&apos;s Encrypt SSL 인증서를 3개월마다 자동 갱신할 수 있도록 처리해놓기도 했다.&lt;br&gt;
+현재 개발 중인 서비스에서는 5분마다 결제 완료된 주문 정보를 찾아 주문 데이터를 생성할 수 있는 과정이 필요했고,&lt;br&gt;
+위의 모든 상황은 crontab의 설정으로 처리하고 있다.&lt;/p&gt;
+&lt;h2&gt;cron과 crontab의 정의&lt;/h2&gt;
+&lt;h3&gt;cron&lt;/h3&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;cron&lt;/code&gt;은 유닉스 계열 컴퓨터 운영체제의 시간 기반 잡 스케쥴러이다. 좀 더 이해하기 쉽게 말하자면 유틸리티 소프트웨어로 스케쥴링 서비스의 이름이다.&lt;br&gt;
+일반적으로 백그라운드에서 계속 실행되고, 미리 정의된 작업을 예약 실행한다.&lt;br&gt;
+위에서 말했던 것처럼 주기적으로 실행해야하는 작업들에 사용한다.&lt;/p&gt;
+&lt;p&gt;시스템에서 기본적으로 사용하고 있는 cron 설정은 시스템cron이라 하고 root나 일반 사용자가 자신의 cron 설정을 직접하는 경우에는 사용자cron이라고 한다.&lt;/p&gt;
+&lt;h3&gt;crontab&lt;/h3&gt;
+&lt;p&gt;cron은 주어진 일정에 주기적으로 실행하도록 규정해놓은 &lt;code class=&quot;language-text&quot;&gt;crontab&lt;/code&gt; (cron table) 파일에 의해 구동된다.&lt;br&gt;
+crontab 파일은 주기적으로 실행될 명령들로 구성된다.&lt;br&gt;
+이것도 쉽게 말하자면 cron 이라는 스케쥴링 서비스에서 반복적으로 실행시킬 내용들을 정의해놓은 파일이 crontab이라고 생각하면 된다.&lt;/p&gt;
+&lt;h3&gt;crond&lt;/h3&gt;
+&lt;p&gt;crond 는 cron daemon을 의미한다.&lt;br&gt;
+cron을 얘기할 때 백그라운드에서 실행된다고 했는데, 컴퓨터 용어로 daemon의 의미가 백그라운드에서 돌면서 여러 작업을 하는 프로그램을 말한다.&lt;br&gt;
+crond는 백그라운드에서 실행되고 crontab 파일을 읽는 daemon의 이름이다.
+실제로 crontab의 내용을 읽어와 실행하는 것의 이름이 crond 이기 때문에 crontab의 내용이 변경되면 crond 서비스를 재시작해줘야 한다.&lt;/p&gt;
+&lt;h2&gt;crontab 설정&lt;/h2&gt;
+&lt;p&gt;crontab을 설정하는 방법에 두 가지가 있다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;# vi /etc/crontab
+
+# crontab -e&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;차이점은 &lt;code class=&quot;language-text&quot;&gt;/etc/crontab&lt;/code&gt;에 설정할 때는 사용자(user)까지 명시를 해줘야 하지만 &lt;code class=&quot;language-text&quot;&gt;crontab -e&lt;/code&gt;로 편집할 때는 쓰지 않아도 된다는 것이다.&lt;br&gt;
+어떤 기준으로 어디에 설정을 하는건지는.. 잘 모르겠다..&lt;br&gt;
+관리자 권한이 있으면 /etc/crontab, 없으면 crontab 명령어로 한다고도 하는데..&lt;br&gt;
+일단 우리 서비스에서는 root에서 crontab 명령어를 사용해 crontab 설정을 하고 있긴 하다.&lt;/p&gt;
+&lt;h3&gt;crontab 명령어로 설정하기&lt;/h3&gt;
+&lt;p&gt;crontab 명령어에는 여러 옵션이 있다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;crontab -e : 실행시킬 명령어 등록 및 편집&lt;/li&gt;
+&lt;li&gt;crontab -l : 등록되어있는 crontab 설정 확인&lt;/li&gt;
+&lt;li&gt;crontab -r : 현재 crontab에 설정되어있는 내용 삭제&lt;/li&gt;
+&lt;li&gt;crontab -u : 특정 user의 crontab을 설정할 때&lt;/li&gt;
+&lt;li&gt;crontab -i : crontab 내용 삭제 전 확인 문구 띄움&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;/etc/crontab에 설정하기&lt;/h3&gt;
+&lt;p&gt;/etc/crontab을 편집기로 열어 설정할 수 있다.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;ul&gt;
+&lt;li&gt;[user-name] [command] 형태로 설정해야한다.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;주의사항&lt;/h2&gt;
+&lt;p&gt;직접 겪고 쓰는 주의사항..? 이라기보다 설정 시 확인해야할 사항이다.&lt;/p&gt;
+&lt;h3&gt;파일 권한 확인&lt;/h3&gt;
+&lt;p&gt;추가하려던 내용이 curl을 사용해 API를 호출하는 쉘 스크립트의 실행이였다.
+cron이 원하는 시간 설정대로 제대로 실행은 되고 있는데 API는 호출이 안되고 있었어서 도대체 뭐가 문제인가.. 쉘스크립트를 잘못 썼나.. 하다가 문득 파일 권한 설정에 대해 생각이 나서 확인해보니 &lt;code class=&quot;language-text&quot;&gt;-rwx-r--r--&lt;/code&gt; 이렇게 되어있었나.. 암튼 group과 모든 사용자의 권한에 execute가 없었다.&lt;/p&gt;
+&lt;p&gt;그래서 그런건지 쉘 스크립트를 잘 읽어가긴 했는데 실행이 안된 것 같았다..ㅠㅠ
+파일 권한에서 execute 권한 추가해주니 바로 쉘 스크립트 실행이 잘 되었다.&lt;/p&gt;
+&lt;p&gt;만약 로그를 확인했는데 아무 에러가 없는데 쉘 스크립트가 실행이 안되는 것 같을 땐 파일의 권한이 잘 설정되어있는지 확인해보는 것이 좋다!&lt;/p&gt;
+&lt;h2&gt;마무리&lt;/h2&gt;
+&lt;p&gt;crontab 설정할 때마다 매번 찾아보게 되서 마침 또 다른 cronjob 등록할 상황이 생겨 정리하게 되었다.&lt;br&gt;
+글 안보고도 바로 설정할 수 있으면 좋긴 하겠지만 만약 헷갈린다면 이젠 내 블로그 봐야지~!&lt;/p&gt;
+&lt;p&gt;참고&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://ko.wikipedia.org/wiki/Cron&quot;&gt;cron&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://stackoverflow.com/questions/21615673/difference-between-cron-crontab-and-cronjob&quot;&gt;Difference between cron, crontab, and cronjob?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://stackoverflow.com/questions/21789148/difference-between-cron-and-crontab&quot;&gt;Difference between Cron and Crontab?&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[브라우저 렌더링]]></title><description><![CDATA[…]]></description><link>https://yujuck.github.io/230611-브라우저 렌더링/</link><guid isPermaLink="false">https://yujuck.github.io/230611-브라우저 렌더링/</guid><pubDate>Sun, 11 Jun 2023 00:00:00 GMT</pubDate><content:encoded>&lt;h2&gt;렌더링 엔진&lt;/h2&gt;
 &lt;p&gt;렌더링 엔진의 기본적인 역할을 요청 받은 내용을 브라우저에 표시하는 것이다.
 프론트 작업 시 브라우저마다 다르게 보이는 경우를 한번쯤 겪어보는데, 브라우저마다 사용하는 렌더링 엔진이 다르기 때문이다.&lt;/p&gt;
 &lt;h2&gt;렌더링 엔진들&lt;/h2&gt;
