@@ -2,7 +2,7 @@
 title: "브라우저 렌더링"
 date: 2023-06-11
 update: 2023-06-11
-series: Back to Basics
+series: "Back to Basics"
 tags:
   - web
   - 브라우저

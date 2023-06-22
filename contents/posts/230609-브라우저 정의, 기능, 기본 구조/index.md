@@ -2,7 +2,7 @@
 title: "브라우저 정의, 기능, 기본 구조"
 date: 2023-06-09
 update: 2023-06-09
-series: Back to Basics
+series: "Back to Basics"
 tags:
   - web
   - 브라우저
