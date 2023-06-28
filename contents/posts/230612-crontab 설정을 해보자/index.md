@@ -66,7 +66,9 @@ crontab 명령어에는 여러 옵션이 있다.
 
 /etc/crontab을 편집기로 열어 설정할 수 있다.
 
-- - - - - [user-name] [command] 형태로 설정해야한다.
+![/etc/crontab](etc_crontab.png)
+
+`* * * * * [user-name] [command]` 형태로 설정해야한다.
 
 ## 주의사항
 
