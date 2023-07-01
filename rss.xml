@@ -1,4 +1,92 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[RSS Feed of yujuck]]></title><description><![CDATA[찾아가는 과정의 기록]]></description><link>https://yujuck.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Tue, 27 Jun 2023 15:32:23 GMT</lastBuildDate><item><title><![CDATA[회원가입, 비밀번호 찾기 이메일 인증 어떻게 하지?]]></title><description><![CDATA[…]]></description><link>https://yujuck.github.io/230627-이메일 인증 구현/</link><guid isPermaLink="false">https://yujuck.github.io/230627-이메일 인증 구현/</guid><pubDate>Tue, 27 Jun 2023 00:00:00 GMT</pubDate><content:encoded>&lt;h2&gt;현재 상황&lt;/h2&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[RSS Feed of yujuck]]></title><description><![CDATA[찾아가는 과정의 기록]]></description><link>https://yujuck.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Sat, 01 Jul 2023 16:37:48 GMT</lastBuildDate><item><title><![CDATA[NestJS와 AWS SES로 이메일 인증 구현하기]]></title><description><![CDATA[구현하려는 이메일 인증 플로우 간단하게 동작으로만 플로우차트를 그려봤다. (자세한 API 내부 동작 플로우 생략)  1. JWT 발급 회원가입 이메일 인증에 를 사용했다.  정보만 두고 으로 설정했다.
+처음에는 유효시간을 3…]]></description><link>https://yujuck.github.io/230628-이메일 인증 구현.md/</link><guid isPermaLink="false">https://yujuck.github.io/230628-이메일 인증 구현.md/</guid><pubDate>Wed, 28 Jun 2023 00:00:00 GMT</pubDate><content:encoded>&lt;h2&gt;구현하려는 이메일 인증 플로우&lt;/h2&gt;
+&lt;p&gt;간단하게 동작으로만 플로우차트를 그려봤다. (자세한 API 내부 동작 플로우 생략)&lt;/p&gt;
+&lt;p&gt;&lt;figure class=&apos;gatsby-resp-image-figure&apos; style=&apos;margin-bottom: 16px;&apos;&gt;
+    &lt;span class=&apos;gatsby-resp-image-wrapper&apos; style=&apos;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 680px; &apos;&gt;
+      &lt;a class=&apos;gatsby-resp-image-link&apos; href=&apos;/static/49e408f04d9c74193d39f52d1f6d481d/ed632/join.jpg&apos; style=&apos;display: block&apos; target=&apos;_blank&apos; rel=&apos;noopener&apos;&gt;
+    &lt;span class=&apos;gatsby-resp-image-background-image&apos; style=&quot;padding-bottom: 79.41176470588235%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAAQABQDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAEF/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAH/2gAMAwEAAhADEAAAAdtRFJ//xAAUEAEAAAAAAAAAAAAAAAAAAAAg/9oACAEBAAEFAl//xAAUEQEAAAAAAAAAAAAAAAAAAAAQ/9oACAEDAQE/AT//xAAUEQEAAAAAAAAAAAAAAAAAAAAQ/9oACAECAQE/AT//xAAUEAEAAAAAAAAAAAAAAAAAAAAg/9oACAEBAAY/Al//xAAZEAACAwEAAAAAAAAAAAAAAAAAARARUSH/2gAIAQEAAT8hpdKWFLDZ/9oADAMBAAIAAwAAABBX/wD/xAAYEQACAwAAAAAAAAAAAAAAAAAAAREhMf/aAAgBAwEBPxB3pCP/xAAWEQEBAQAAAAAAAAAAAAAAAAAAARH/2gAIAQIBAT8QbX//xAAaEAACAwEBAAAAAAAAAAAAAAAAAREhMUHR/9oACAEBAAE/EHBUyoRcDtIk/SMEoP/Z&apos;); background-size: cover; display: block;&quot;&gt;&lt;/span&gt;
+  &lt;img class=&apos;gatsby-resp-image-image&apos; alt=&apos;회원가입 버튼 클릭 이후 플로우&apos; title=&apos;회원가입 버튼 클릭 이후 플로우&apos; src=&apos;/static/49e408f04d9c74193d39f52d1f6d481d/a22ce/join.jpg&apos; srcset=&apos;/static/49e408f04d9c74193d39f52d1f6d481d/0b705/join.jpg 170w,
+/static/49e408f04d9c74193d39f52d1f6d481d/31389/join.jpg 340w,
+/static/49e408f04d9c74193d39f52d1f6d481d/a22ce/join.jpg 680w,
+/static/49e408f04d9c74193d39f52d1f6d481d/ed632/join.jpg 917w&apos; sizes=&apos;(max-width: 680px) 100vw, 680px&apos; style=&apos;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&apos; loading=&apos;lazy&apos; decoding=&apos;async&apos;&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;
+    &lt;figcaption class=&apos;gatsby-resp-image-figcaption&apos;&gt;회원가입 버튼 클릭 이후 플로우&lt;/figcaption&gt;
+  &lt;/figure&gt;&lt;/p&gt;
+&lt;h2&gt;1. JWT 발급&lt;/h2&gt;
+&lt;p&gt;회원가입 이메일 인증에 &lt;code class=&quot;language-text&quot;&gt;JWT&lt;/code&gt;를 사용했다.&lt;br&gt;
+&lt;code class=&quot;language-text&quot;&gt;payload에는 email&lt;/code&gt; 정보만 두고 &lt;code class=&quot;language-text&quot;&gt;expiresIn을 24시간&lt;/code&gt;으로 설정했다.
+처음에는 유효시간을 30분으로 설정하고 만료된 토큰이 포함된 링크로 접속하면 인증 메일을 다시 전달받을 수 있도록 하려고 했는데,
+팀원들과 상의하여 유효시간은 24시간으로 두고 그 안에 인증하지 않으면 유저 정보를 삭제하는걸로 정했다.&lt;br&gt;
+이렇게 한 이유는 이메일 인증이 회원가입의 최종 단계로서 인증이 되지 않으면 로그인을 할 수 없는데, 실제로 사용하려는 유저라면 보통 바로 인증하기 때문에 24시간 내에 하지 않았다는건 사용하려는 의지가 없다라고 판단해서 삭제하기로 했다.&lt;br&gt;
+다른 곳들은 어떻게 하는지 궁금해..&lt;/p&gt;
+&lt;p&gt;이렇게 발급받은 JWT는 API에서 만료시간 email 정보를 얻기 위해 사용된다.&lt;/p&gt;
+&lt;h2&gt;2. 이메일 전송하기&lt;/h2&gt;
+&lt;p&gt;회사에서는 &lt;code class=&quot;language-text&quot;&gt;AWS SES&lt;/code&gt;를 이용하고 있다. 회원가입 이메일 인증을 위한 템플릿은 미리 만들어두고 메일 내 &lt;code class=&quot;language-text&quot;&gt;이메일 인증 버튼&lt;/code&gt;에는 templateData를 전달받을 수 있도록 설정해두었다.&lt;/p&gt;
+&lt;p&gt;백엔드에서 만든 이메일 전송 API는 프론트에서 전달해주는 이메일 템플릿 타입, email 주소, templateData를 전달받아 이메일 전송 command를 생성하여 호출하는 역할을 하도록 만들었다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;typescript&quot;&gt;&lt;pre class=&quot;language-typescript&quot;&gt;&lt;code class=&quot;language-typescript&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;ISendEmailBody&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  template&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+  email&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+  templateData&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// JSON.stringify&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; emailRequestData &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  Source&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;보내는 사람 이메일&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  Destination&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    ToAddresses&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;email&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  Template&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; template&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  TemplateData&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; templateData &lt;span class=&quot;token operator&quot;&gt;??&lt;/span&gt; &lt;span class=&quot;token template-string&quot;&gt;&lt;span class=&quot;token template-punctuation string&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;{}&lt;/span&gt;&lt;span class=&quot;token template-punctuation string&quot;&gt;`&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; command &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;SendTemplatedEmailCommand&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;emailRequestData&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;sesClient&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;send&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;emailCommand&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;메일 내에 있는 이메일 인증 버튼에 백엔드 API의 endpoint를 설정하기 위해 templateData에는 템플릿에 설정한 변수(key)와 거기에 넣을 값을 객체 형태로 만든 후 string으로 전달해야한다.&lt;/p&gt;
+&lt;p&gt;참고로 SendTemplatedEmailCommand 사용하면 templateData가 필수값인데, &lt;code class=&quot;language-text&quot;&gt;&apos;&apos;&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;&apos;null&apos;&lt;/code&gt; 이런식으로 보내면 전송이 안되고 &lt;code class=&quot;language-text&quot;&gt;{}&lt;/code&gt; 이렇게 보내야 한다.&lt;/p&gt;
+&lt;br /&gt;
+&lt;p&gt;💡 Amazon Simple Email Service (SES)&lt;br&gt;
+사용자의 이메일 주소와 도메인을 사용해 이메일을 보내고 받기 위한 경제적이고 손쉬운 방법을 제공하는 이메일 플랫폼이다.&lt;/p&gt;
+&lt;h2&gt;3. 사용자 인증 상태 변경 API 호출&lt;/h2&gt;
+&lt;p&gt;&lt;figure class=&apos;gatsby-resp-image-figure&apos; style=&apos;margin-bottom: 16px;&apos;&gt;
+    &lt;span class=&apos;gatsby-resp-image-wrapper&apos; style=&apos;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 680px; &apos;&gt;
+      &lt;a class=&apos;gatsby-resp-image-link&apos; href=&apos;/static/8c175da422bdda13c3eb36c437157b7f/7aaf2/email.jpg&apos; style=&apos;display: block&apos; target=&apos;_blank&apos; rel=&apos;noopener&apos;&gt;
+    &lt;span class=&apos;gatsby-resp-image-background-image&apos; style=&quot;padding-bottom: 72.35294117647058%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAAOABQDASIAAhEBAxEB/8QAGAAAAwEBAAAAAAAAAAAAAAAAAAECBAX/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIQAxAAAAHpbYsYg//EABoQAAEFAQAAAAAAAAAAAAAAABABAgMREiH/2gAIAQEAAQUCR2Zx2x//xAAUEQEAAAAAAAAAAAAAAAAAAAAQ/9oACAEDAQE/AT//xAAUEQEAAAAAAAAAAAAAAAAAAAAQ/9oACAECAQE/AT//xAAYEAACAwAAAAAAAAAAAAAAAAABEQIQQf/aAAgBAQAGPwKTmEcd4r//xAAZEAACAwEAAAAAAAAAAAAAAAABEQAQMUH/2gAIAQEAAT8hMzsuVrcwdf/aAAwDAQACAAMAAAAQZM//xAAWEQEBAQAAAAAAAAAAAAAAAAABEBH/2gAIAQMBAT8QTJ//xAAUEQEAAAAAAAAAAAAAAAAAAAAQ/9oACAECAQE/ED//xAAbEAEBAAIDAQAAAAAAAAAAAAABERAhAEGRUf/aAAgBAQABPxC15A1r0aIT3vOwo+Y328g6x//Z&apos;); background-size: cover; display: block;&quot;&gt;&lt;/span&gt;
+  &lt;img class=&apos;gatsby-resp-image-image&apos; alt=&apos;전송된 이메일&apos; title=&apos;전송된 이메일&apos; src=&apos;/static/8c175da422bdda13c3eb36c437157b7f/a22ce/email.jpg&apos; srcset=&apos;/static/8c175da422bdda13c3eb36c437157b7f/0b705/email.jpg 170w,
+/static/8c175da422bdda13c3eb36c437157b7f/31389/email.jpg 340w,
+/static/8c175da422bdda13c3eb36c437157b7f/a22ce/email.jpg 680w,
+/static/8c175da422bdda13c3eb36c437157b7f/7aaf2/email.jpg 776w&apos; sizes=&apos;(max-width: 680px) 100vw, 680px&apos; style=&apos;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&apos; loading=&apos;lazy&apos; decoding=&apos;async&apos;&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;
+    &lt;figcaption class=&apos;gatsby-resp-image-figcaption&apos;&gt;전송된 이메일&lt;/figcaption&gt;
+  &lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;위처럼 이메일을 수신하면 사용자는 이메일 인증하기 버튼을 클릭해 인증하게 된다.&lt;br&gt;
+저 버튼의 href에는 백엔드 API의 endpoint가 정의된다.&lt;/p&gt;
+&lt;p&gt;클릭해서 호출된 API는 사용자의 인증 상태를 변경해주는 API이다.&lt;br&gt;
+쿼리스트링으로 &lt;code class=&quot;language-text&quot;&gt;token=&amp;lt;JWT&gt;&lt;/code&gt;을 받고,
+전달받은 JWT를 verify해서 확인을 하고 유효한 경우에만 다음으로 진행한다.&lt;/p&gt;
+&lt;p&gt;JWT가 유효한 경우, 서비스 정책상 이메일 인증이 된 사용자만 로그인할 수 있도록 하고 있어서 이메일 인증 상태를 나타내는 필드를 true로 업데이트 해준다.&lt;/p&gt;
+&lt;p&gt;그리고 24시간 내에 인증을 하지 못하면 유저 정보를 삭제하도록 하고 있기 때문에,&lt;br&gt;
+회원 가입 시 expiredAt을 24시간 이후로 설정하여 저장하고, (해당 필드는 ttl 설정 - mongoDB)
+이메일 인증이 되면 null로 변경해줘야 한다.&lt;/p&gt;
+&lt;h2&gt;4. 리다이렉트&lt;/h2&gt;
+&lt;p&gt;어떻게 해야하는건지 생각을 못했는데 아주 쉽게 해결된 부분이다.&lt;br&gt;
+사실 지금 생각해보니까 검색할 때 리다이렉트라고 검색해놓고 왜 response.redirect를 사용할 생각을 못했는지 의문...😅&lt;/p&gt;
+&lt;p&gt;NestJS를 사용하고 있어 response 객체를 사용하진 않고 &lt;code class=&quot;language-text&quot;&gt;@Redirect()&lt;/code&gt;를 사용했다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;typescript&quot;&gt;&lt;pre class=&quot;language-typescript&quot;&gt;&lt;code class=&quot;language-typescript&quot;&gt;&lt;span class=&quot;token decorator&quot;&gt;&lt;span class=&quot;token at operator&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;Redirect&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;리다이렉트 주소&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;emailAuthentication&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token decorator&quot;&gt;&lt;span class=&quot;token at operator&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;Query&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&apos;token&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; token&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;try&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;authService&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;updateVerifiedStatus&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;token&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;catch&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;err&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; url&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;리다이렉트 주소&quot;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// token 인증에 오류 발생하면 홈 화면으로 리다이렉트&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;에러 발생 시 &lt;code class=&quot;language-text&quot;&gt;{url: &quot;리다이렉트 주소&quot;}&lt;/code&gt;를 리턴하고 있는데,&lt;br&gt;
+이렇게 하면 위에 데코레이터에 사용한 주소가 아닌 새로 리턴한 주소로 리다이렉트 시킨다.&lt;br&gt;
+&lt;a href=&quot;https://docs.nestjs.com/controllers#redirection&quot;&gt;공식 문서&lt;/a&gt;를 참고하면 된다.&lt;/p&gt;
+&lt;h2&gt;마무리&lt;/h2&gt;
+&lt;p&gt;다행히 생각했던대로 만들어낼 수 있었던 것 같다.&lt;br&gt;
+다만 다른 곳에서는 유효시간을 두고 어떻게 인증하게 하는지는 조금 궁금함..&lt;br&gt;
+메일 전송 계속 다시 할 수 있게 하는지..&lt;/p&gt;
+&lt;p&gt;AWS SES랑 redirect, forward는 다른 글에서 다시 한번 정리해보자~&lt;/p&gt;</content:encoded></item><item><title><![CDATA[회원가입, 비밀번호 찾기 이메일 인증 어떻게 하지?]]></title><description><![CDATA[…]]></description><link>https://yujuck.github.io/230627-이메일 인증 구현/</link><guid isPermaLink="false">https://yujuck.github.io/230627-이메일 인증 구현/</guid><pubDate>Tue, 27 Jun 2023 00:00:00 GMT</pubDate><content:encoded>&lt;h2&gt;현재 상황&lt;/h2&gt;
 &lt;p&gt;현재 회사에서 만들고 있는 서비스에서 이메일을 통한 인증 방식을 사용하는 부분이 두 군데 있다.
 회원가입 시 사용한 이메일을 인증하는 부분과 비밀번호를 찾을 때 전송된 메일을 통해서 들어온 경우에만 비밀번호 재설정을 할 수 있게 하는 부분이다.&lt;/p&gt;
 &lt;p&gt;지금은 단순히 이메일 내 버튼에 이동시킬 페이지 주소를 넣어놓고 클릭 시 해당 페이지로 이동하도록 되어있다.
@@ -43,8 +131,8 @@ NestJS에서 애초에 Controller 쪽에 &lt;code class=&quot;language-text&quot
 버튼에 연결시킬 url의 쿼리스트링으로 사용자 정보를 담은 JWT가 설정되도록 해서 이메일을 보내고, 해당 페이지에서 JWT 값으로 사용자 정보를 가져와 사용할 수 있도록 하기&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;이렇게 생각했다.&lt;br&gt;
-근데 회원가입 인증 메일, 비밀번호 찾기 둘다 30분 제한 시간 내에 실행되었을 때만 할 예정이라서 JWT에는 ttl을 설정하면 되지만 회원가입 메일은 어떻게 할지 좀 더 생각을 해봐야할 것 같다.&lt;br&gt;
-이것도 마찬가지로 메일 보낼 때 ttl 설정되어 있는 JWT를 보내고 받아서 처리할지..&lt;br&gt;
+근데 회원가입 인증 메일, 비밀번호 찾기 둘다 30분 제한 시간 내에 실행되었을 때만 할 예정이라서 JWT에는 expiresIn을 설정하면 되지만 회원가입 메일은 어떻게 할지 좀 더 생각을 해봐야할 것 같다.&lt;br&gt;
+이것도 마찬가지로 메일 보낼 때 expiresIn 설정되어 있는 JWT를 보내고 받아서 처리할지..&lt;br&gt;
 이렇게 하면 될 것 같긴 함..&lt;/p&gt;
 &lt;p&gt;TO BE CONTINUE...&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Map (ES6)]]></title><description><![CDATA[Map은 키-값 쌍으로 이루어진다. 키를 갖는다는 것에서 객체와 유사하지만 다른 점이 있다. Object Map 이터러블하지 않음 이터러블함 요소 개수 확인하는 프로퍼티 없음 size 프로퍼티로 요소 개수 확인 가능 string이나 Symbol…]]></description><link>https://yujuck.github.io/230622-Map/</link><guid isPermaLink="false">https://yujuck.github.io/230622-Map/</guid><pubDate>Thu, 22 Jun 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Map은 키-값 쌍으로 이루어진다. 키를 갖는다는 것에서 객체와 유사하지만 다른 점이 있다.&lt;/p&gt;
 &lt;table&gt;
@@ -493,25 +581,8 @@ crond는 백그라운드에서 실행되고 crontab 파일을 읽는 daemon의 �
 &lt;/ul&gt;
 &lt;h3&gt;/etc/crontab에 설정하기&lt;/h3&gt;
 &lt;p&gt;/etc/crontab을 편집기로 열어 설정할 수 있다.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;ul&gt;
-&lt;li&gt;[user-name] [command] 형태로 설정해야한다.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
+&lt;!-- ![/etc/crontab](etc_crontab.png) --&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;* * * * * [user-name] [command]&lt;/code&gt; 형태로 설정해야한다.&lt;/p&gt;
 &lt;h2&gt;주의사항&lt;/h2&gt;
 &lt;p&gt;직접 겪고 쓰는 주의사항..? 이라기보다 설정 시 확인해야할 사항이다.&lt;/p&gt;
 &lt;h3&gt;파일 권한 확인&lt;/h3&gt;
