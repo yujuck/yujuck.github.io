@@ -1,4 +1,16 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[RSS Feed of yujuck]]></title><description><![CDATA[찾아가는 과정의 기록]]></description><link>https://yujuck.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Sun, 02 Jul 2023 14:38:44 GMT</lastBuildDate><item><title><![CDATA[Set (ES6)]]></title><description><![CDATA[Set은 중복되지 않는 유일한 값들의 집합(set)이다. 배열(Array)과 유사하지만 차이점이 있다. 구분 Array Set 중복 값 포함 가능 여부 O X 요소의 순서가 유의미 O X 인덱스로 요소 접근 가능 O X Set…]]></description><link>https://yujuck.github.io/230629.Set/</link><guid isPermaLink="false">https://yujuck.github.io/230629.Set/</guid><pubDate>Thu, 29 Jun 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Set은 중복되지 않는 유일한 값들의 집합(set)이다. 배열(Array)과 유사하지만 차이점이 있다.&lt;/p&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[RSS Feed of yujuck]]></title><description><![CDATA[찾아가는 과정의 기록]]></description><link>https://yujuck.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Tue, 11 Jul 2023 14:04:55 GMT</lastBuildDate><item><title><![CDATA[한달에 한 번 마음 먹기]]></title><description><![CDATA[깃헙 블로그로 다시 시작한게 지난달 6월 6일이였고 오늘이 벌써 7월 9일.. 시간은 진짜 빠르게 흘러간다ㅠㅠ 요즘 회사는 매일매일 일이 넘쳐나서 하루에 API…]]></description><link>https://yujuck.github.io/한달에 한번 마음 먹기/</link><guid isPermaLink="false">https://yujuck.github.io/한달에 한번 마음 먹기/</guid><pubDate>Sun, 09 Jul 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;깃헙 블로그로 다시 시작한게 지난달 6월 6일이였고 오늘이 벌써 7월 9일..&lt;br&gt;
+시간은 진짜 빠르게 흘러간다ㅠㅠ&lt;/p&gt;
+&lt;p&gt;요즘 회사는 매일매일 일이 넘쳐나서 하루에 API 여러개씩 만들기도 하고,
+컬렉션 스키마도 작성하고 운영 업무도 보고 질문도 받고 그러느라 시간이 순식간에 지나간다.&lt;br&gt;
+블로그글 다시 쓰면서는 기초 개념들이나 문법들 내용 얼른얼른 넘어가고 다른 내용들 많이 봐야지
+라고 생각했는데, 회사 갔다오면 기운이 다 빠져서 뭔가 할 의욕이 안생김 흑흑ㅠㅠ&lt;/p&gt;
+&lt;p&gt;이런저런 이유로 의욕이 사라진 것 같아서 다시 한번 마음을 먹어야 할 것 같다..!&lt;br&gt;
+의욕만 앞세워서 목표를 세우고 작심삼일 하는 사람에게&lt;br&gt;
+작심삼일을 사흘에 한번씩 하면 되지 않겠냐는 말처럼&lt;br&gt;
+한달 간격으로 다시 한번 의욕을 불어넣는 글을 써보는 것도 나쁘지 않을 듯..!&lt;/p&gt;
+&lt;p&gt;더운 여름.. 7월 한달 일도 많고 주말에 약속도 많지만 다시 한 번 노력해보자고..!!!&lt;/p&gt;
+&lt;p&gt;일단 es6 시리즈 먼저 끝내던가 신입분들 OJT 맞춰서 Back to basic 시리즈 진행하던가 좀 해보자..&lt;br&gt;
+이미 OJT가 많이 진행되었지만 그래도 해보자고...&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Set (ES6)]]></title><description><![CDATA[Set은 중복되지 않는 유일한 값들의 집합(set)이다. 배열(Array)과 유사하지만 차이점이 있다. 구분 Array Set 중복 값 포함 가능 여부 O X 요소의 순서가 유의미 O X 인덱스로 요소 접근 가능 O X Set…]]></description><link>https://yujuck.github.io/230629.Set/</link><guid isPermaLink="false">https://yujuck.github.io/230629.Set/</guid><pubDate>Thu, 29 Jun 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Set은 중복되지 않는 유일한 값들의 집합(set)이다. 배열(Array)과 유사하지만 차이점이 있다.&lt;/p&gt;
 &lt;table&gt;
 &lt;thead&gt;
 &lt;tr&gt;
@@ -440,6 +452,15 @@ map&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=
 
 console&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;...&lt;/span&gt;map&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// [[&quot;a&quot;, &quot;aa&quot;],[&quot;b&quot;, &quot;bb&quot;]]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Map.prototype.keys, Map.prototype.values, Map.prototype.entries 메서드도 제공하고 있다.&lt;/p&gt;
+&lt;h2&gt;Map to Object&lt;/h2&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;Object.fromEntries()&lt;/code&gt; 를 사용하여 Map 객체를 Object로 변환시킬 수 있다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;javascript&quot;&gt;&lt;pre class=&quot;language-javascript&quot;&gt;&lt;code class=&quot;language-javascript&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; map &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;Map&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;one&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;two&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; obj &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; Object&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;fromEntries&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;map&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+console&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;obj&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// {one: 1, two: 2}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h2&gt;언제 활용해야할까?&lt;/h2&gt;
 &lt;p&gt;사실 Map 객체를 잘 사용하고 있진 않다. 거의 Object를 사용하고 있는데, 이번 내용을 찾아보면서 언제 Map을 쓰면 되는걸까 찾아봤다.&lt;/p&gt;
 &lt;p&gt;근데 대부분 그냥 Map의 특징과 엮어서 설명하고 있는 것 같다.&lt;br&gt;

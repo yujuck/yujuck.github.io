@@ -346,6 +346,15 @@ map<span class="token punctuation">.</span><span class="token function">forEach<
 
 console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token operator">...</span>map<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// [["a", "aa"],["b", "bb"]]</span></code></pre></div>
 <p>Map.prototype.keys, Map.prototype.values, Map.prototype.entries 메서드도 제공하고 있다.</p>
+<h2>Map to Object</h2>
+<p><code class="language-text">Object.fromEntries()</code> 를 사용하여 Map 객체를 Object로 변환시킬 수 있다.</p>
+<div class="gatsby-highlight" data-language="javascript"><pre class="language-javascript"><code class="language-javascript"><span class="token keyword">const</span> map <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Map</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
+  <span class="token punctuation">[</span><span class="token string">"one"</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token punctuation">[</span><span class="token string">"two"</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> obj <span class="token operator">=</span> Object<span class="token punctuation">.</span><span class="token function">fromEntries</span><span class="token punctuation">(</span>map<span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>obj<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// {one: 1, two: 2}</span></code></pre></div>
 <h2>언제 활용해야할까?</h2>
 <p>사실 Map 객체를 잘 사용하고 있진 않다. 거의 Object를 사용하고 있는데, 이번 내용을 찾아보면서 언제 Map을 쓰면 되는걸까 찾아봤다.</p>
 <p>근데 대부분 그냥 Map의 특징과 엮어서 설명하고 있는 것 같다.<br>
